@@ -40,14 +40,17 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState('incomplete');
+  const [tag, setTag] = useState('');
 
   useEffect(() => {
     if (type === 'update' && todo) {
       setTitle(todo.title);
       setStatus(todo.status);
+      setTag(todo.tag);
     } else {
       setTitle('');
       setStatus('incomplete');
+      setTag('');
     }
   }, [type, todo, modalOpen]);
 
@@ -57,21 +60,22 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
       toast.error('Please enter a title');
       return;
     }
-    if (title && status) {
+    if (title && status ) {
       if (type === 'add') {
         dispatch(
           addTodo({
             id: uuid(),
             title,
             status,
+            tag,
             time: format(new Date(), 'p, MM/dd/yyyy'),
           })
         );
         toast.success('Task added successfully');
       }
       if (type === 'update') {
-        if (todo.title !== title || todo.status !== status) {
-          dispatch(updateTodo({ ...todo, title, status }));
+        if (todo.title !== title || todo.status !== status || todo.tag !== tag) {
+          dispatch(updateTodo({ ...todo, title, status, tag }));
           toast.success('Task Updated successfully');
         } else {
           toast.error('No changes made');
@@ -119,18 +123,27 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
               <label htmlFor="title">
                 {t('todo.title')}
                 <input
-                  type="text"
-                  id="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                    type="text"
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+              </label>
+              <label htmlFor="title">
+                Tag
+                <input
+                    type="text"
+                    id="tag"
+                    value={tag}
+                    onChange={(e) => setTag(e.target.value)}
                 />
               </label>
               <label htmlFor="type">
                 {t('todo.status')}
                 <select
-                  id="type"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                    id="type"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="incomplete">Incomplete</option>
                   <option value="complete">Completed</option>
@@ -139,8 +152,8 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
               <div className={styles.buttonContainer}>
                 <Button type="submit" variant="primary">
                   {type === 'add'
-                    ? `${t('todo.add_task')}`
-                    : `${t('todo.add_task')}`}
+                      ? `${t('todo.add_task')}`
+                      : `${t('todo.add_task')}`}
                 </Button>
                 <Button variant="secondary" onClick={() => setModalOpen(false)}>
                   {t('todo.cancel')}
