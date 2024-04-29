@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import styles from '../styles/modules/app.module.scss';
 import TodoItem from './TodoItem';
+import { useTranslation } from 'react-i18next';
 
 const container = {
   hidden: { opacity: 1 },
@@ -24,6 +25,11 @@ const child = {
 function AppContent() {
   const todoList = useSelector((state) => state.todo.todoList);
   const filterStatus = useSelector((state) => state.todo.filterStatus);
+
+  const {
+    t,
+    i18n: {},
+  } = useTranslation();
 
   const sortedTodoList = [...todoList];
   sortedTodoList.sort((a, b) => new Date(b.time) - new Date(a.time));
@@ -51,7 +57,7 @@ function AppContent() {
           ))
         ) : (
           <motion.p variants={child} className={styles.emptyText}>
-            No Todos
+            {t('todo.no_todos')}
           </motion.p>
         )}
       </AnimatePresence>

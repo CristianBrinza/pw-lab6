@@ -4,12 +4,18 @@ import Button, { SelectButton } from './Button';
 import styles from '../styles/modules/app.module.scss';
 import TodoModal from './TodoModal';
 import { updateFilterStatus } from '../slices/todoSlice';
+import { useTranslation } from 'react-i18next';
 
 function AppHeader() {
   const [modalOpen, setModalOpen] = useState(false);
   const initialFilterStatus = useSelector((state) => state.todo.filterStatus);
   const [filterStatus, setFilterStatus] = useState(initialFilterStatus);
   const dispatch = useDispatch();
+
+  const {
+    t,
+    i18n: {},
+  } = useTranslation();
 
   const updateFilter = (e) => {
     setFilterStatus(e.target.value);
@@ -19,16 +25,16 @@ function AppHeader() {
   return (
     <div className={styles.appHeader}>
       <Button variant="primary" onClick={() => setModalOpen(true)}>
-        Add Task
+        {t('home.add')}
       </Button>
       <SelectButton
         id="status"
         onChange={(e) => updateFilter(e)}
         value={filterStatus}
       >
-        <option value="all">All</option>
-        <option value="incomplete">Incomplete</option>
-        <option value="complete">Completed</option>
+        <option value="all">{t('home.all')}</option>
+        <option value="incomplete">{t('home.incomplete')}</option>
+        <option value="complete">{t('home.completed')}</option>
       </SelectButton>
       <TodoModal type="add" modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </div>

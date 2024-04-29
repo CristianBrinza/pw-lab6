@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { addTodo, updateTodo } from '../slices/todoSlice';
 import styles from '../styles/modules/modal.module.scss';
 import Button from './Button';
+import { useTranslation } from 'react-i18next';
 
 const dropIn = {
   hidden: {
@@ -31,6 +32,11 @@ const dropIn = {
 };
 
 function TodoModal({ type, modalOpen, setModalOpen, todo }) {
+  const {
+    t,
+    i18n: {},
+  } = useTranslation();
+
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState('incomplete');
@@ -108,10 +114,10 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
 
             <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
               <h1 className={styles.formTitle}>
-                {type === 'add' ? 'Add' : 'Update'} TODO
+                {type === 'add' ? `${t('todo.add')}` : 'Update'} TODO
               </h1>
               <label htmlFor="title">
-                Title
+                {t('todo.title')}
                 <input
                   type="text"
                   id="title"
@@ -120,7 +126,7 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
                 />
               </label>
               <label htmlFor="type">
-                Status
+                {t('todo.status')}
                 <select
                   id="type"
                   value={status}
@@ -132,10 +138,12 @@ function TodoModal({ type, modalOpen, setModalOpen, todo }) {
               </label>
               <div className={styles.buttonContainer}>
                 <Button type="submit" variant="primary">
-                  {type === 'add' ? 'Add Task' : 'Update Task'}
+                  {type === 'add'
+                    ? `${t('todo.add_task')}`
+                    : `${t('todo.add_task')}`}
                 </Button>
                 <Button variant="secondary" onClick={() => setModalOpen(false)}>
-                  Cancel
+                  {t('todo.cancel')}
                 </Button>
               </div>
             </form>

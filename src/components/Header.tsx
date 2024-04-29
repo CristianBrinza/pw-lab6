@@ -1,38 +1,22 @@
-import React from 'react';
-import styles from '../styles/modules/button.module.scss';
-import { getClasses } from '../utils/getClasses';
+import { useTheme } from '../ThemeContext'; // Updated path, up one level
+import Button from './Button'; // Adjusted for relative path if Button is in the same directory
 
-const buttonTypes = {
-  primary: 'primary',
-  secondary: 'secondary',
+const Header = () => {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <header
+      style={{
+        padding: '10px',
+        textAlign: 'center',
+        backgroundColor: theme === 'dark' ? '#333' : '#f5f5f5',
+      }}
+    >
+      <Button variant="secondary" onClick={toggleTheme}>
+        Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+      </Button>
+    </header>
+  );
 };
 
-function Button({ type, variant = 'primary', children, ...rest }) {
-  return (
-    <button
-      type={type === 'submit' ? 'submit' : 'button'}
-      className={getClasses([
-        styles.button,
-        styles[`button--${buttonTypes[variant]}`],
-      ])}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
-}
-
-function SelectButton({ children, id, ...rest }) {
-  return (
-    <select
-      id={id}
-      className={getClasses([styles.button, styles.button__select])}
-      {...rest}
-    >
-      {children}
-    </select>
-  );
-}
-
-export { SelectButton };
-export default Button;
+export default Header;
