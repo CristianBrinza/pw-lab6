@@ -5,7 +5,7 @@ import AppHeader from '../components/AppHeader';
 import AppContent from '../components/AppContent';
 import styles from '../styles/modules/app.module.scss';
 import i18n from '../i18n';
-
+// random comment to use the github page action
 export default function Home() {
   const {
     t,
