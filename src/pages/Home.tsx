@@ -12,18 +12,6 @@ export default function Home() {
     i18n: {},
   } = useTranslation();
 
-  const handleChangeLanguage = () => {
-    const newLanguage = i18n.language === 'en' ? 'ro' : 'en';
-    i18n.changeLanguage(newLanguage);
-
-    const pathParts = location.pathname.split('/').filter(Boolean);
-    if (pathParts[0] === 'en' || pathParts[0] === 'ro') {
-      pathParts[0] = newLanguage;
-    } else {
-      pathParts.unshift(newLanguage);
-    }
-  };
-
   return (
     <>
       <div>
