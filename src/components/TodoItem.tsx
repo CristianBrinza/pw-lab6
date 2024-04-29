@@ -66,6 +66,12 @@ function TodoItem({ todo }) {
             </p>
           </div>
         </div>
+        {todo.tag && (
+            <div style={{padding: "5px 10px", background: "lightgray", color: "white", borderRadius: "100px"}}>
+              {todo.tag}
+            </div>
+        )}
+
         <div className={styles.todoActions}>
           <div
             className={styles.icon}
