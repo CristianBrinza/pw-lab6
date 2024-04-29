@@ -22,7 +22,7 @@ export default function Home() {
               borderRadius: '5px',
               marginTop: '30px',
             }}
-            src="/images/logo.png"
+            src="images/logo.png"
             alt="TO DO"
           />
         </p>
